@@ -5,6 +5,7 @@ package yala;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Formatter;
 import java.util.logging.LogRecord;
@@ -15,6 +16,13 @@ import java.util.logging.LogRecord;
  * @author Alistair A. Israel
  */
 public class SimpleFormatter extends Formatter {
+
+    /**
+     * {@value #DATE_PATTERN}
+     */
+    public static final String DATE_PATTERN = "yyyy-MM-dd HH:mm:ss.SSS";
+
+    private final SimpleDateFormat sdf = new SimpleDateFormat(DATE_PATTERN);
 
     /**
      * {@inheritDoc}
@@ -29,8 +37,9 @@ public class SimpleFormatter extends Formatter {
         } else {
             msg = record.getMessage();
         }
-        final String line = String.format("%s [%s] %s#%s %s", new Date(record.getMillis()).toString(),
-                record.getLevel(), record.getSourceClassName(), record.getSourceMethodName(), msg);
+        final Date recordDate = new Date(record.getMillis());
+        final String line = String.format("%s [%s] %s#%s %s\n", sdf.format(recordDate), record.getLevel(),
+                record.getSourceClassName(), record.getSourceMethodName(), msg);
         if (record.getThrown() == null) {
             return line;
         }
@@ -38,7 +47,7 @@ public class SimpleFormatter extends Formatter {
         // Need to incorporate the exception stack trace
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         final PrintStream ps = new PrintStream(baos);
-        ps.println(line);
+        ps.print(line);
         record.getThrown().printStackTrace(ps);
         ps.flush();
         return baos.toString();

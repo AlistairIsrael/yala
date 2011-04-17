@@ -5,8 +5,9 @@ package yala;
 
 import static org.junit.Assert.assertEquals;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
@@ -34,8 +35,11 @@ public final class SimpleFormatterTest {
         record.setSourceMethodName("testFormatSingleLine");
 
         final String formatted = new SimpleFormatter().format(record);
-        assertEquals(now.toString()
-                + " [FINE] yala.SimpleFormatterTest#testFormatSingleLine Message with parameter: 2012", formatted);
+
+        final String timestamp = new SimpleDateFormat(SimpleFormatter.DATE_PATTERN).format(now);
+        final String expected = timestamp
+                + " [FINE] yala.SimpleFormatterTest#testFormatSingleLine Message with parameter: 2012\n";
+        assertEquals(expected, formatted);
     }
 
     @Test
@@ -51,15 +55,13 @@ public final class SimpleFormatterTest {
 
         final String formatted = new SimpleFormatter().format(record);
 
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        final PrintStream ps = new PrintStream(baos);
+        final StringWriter sw = new StringWriter();
+        final PrintWriter out = new PrintWriter(sw);
 
-        ps.println(now.toString()
-                + " [FINE] yala.SimpleFormatterTest#testFormatSingleLine Message with parameter: 2012");
-        npe.printStackTrace(ps);
-        ps.flush();
-        ps.close();
+        final String timestamp = new SimpleDateFormat(SimpleFormatter.DATE_PATTERN).format(now);
+        out.print(timestamp + " [FINE] yala.SimpleFormatterTest#testFormatSingleLine Message with parameter: 2012\n");
+        npe.printStackTrace(out);
 
-        assertEquals(baos.toString(), formatted);
+        assertEquals(sw.toString(), formatted);
     }
 }

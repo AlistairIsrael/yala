@@ -66,6 +66,9 @@ public class Jdk14Logger implements Logger {
      *        the message parameters
      */
     private void log(final Level level, final Throwable thrown, final String message, final Object[] args) {
+        if (!logger.isLoggable(level)) {
+            return;
+        }
         final LogRecord record = new LogRecord(level, message);
         if (args != null && args.length > 0) {
             record.setParameters(args);
