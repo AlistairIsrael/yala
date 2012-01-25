@@ -4,7 +4,7 @@
   <parent>
     <artifactId>yala</artifactId>
     <groupId>yala</groupId>
-    <version>0.1-SNAPSHOT</version>
+    <version>0.1.1-SNAPSHOT</version>
   </parent>
 
   <artifactId>yala-jdk14</artifactId>
