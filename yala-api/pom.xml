@@ -7,9 +7,7 @@
     <version>0.1-SNAPSHOT</version>
   </parent>
 
-  <groupId>yala</groupId>
   <artifactId>yala-api</artifactId>
-  <version>0.1-SNAPSHOT</version>
 
   <build>
     <plugins>

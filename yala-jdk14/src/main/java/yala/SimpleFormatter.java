@@ -34,6 +34,7 @@ public class SimpleFormatter extends Formatter {
         final String msg;
         if (record.getParameters() != null && record.getParameters().length > 0) {
             msg = String.format(record.getMessage(), record.getParameters());
+            System.out.println(msg);
         } else {
             msg = record.getMessage();
         }

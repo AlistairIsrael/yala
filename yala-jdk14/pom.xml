@@ -7,9 +7,7 @@
     <version>0.1-SNAPSHOT</version>
   </parent>
 
-  <groupId>yala</groupId>
   <artifactId>yala-jdk14</artifactId>
-  <version>0.1-SNAPSHOT</version>
 
   <dependencies>
     <dependency>

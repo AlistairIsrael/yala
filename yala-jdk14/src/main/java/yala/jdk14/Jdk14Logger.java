@@ -22,7 +22,7 @@ public class Jdk14Logger implements Logger {
     /**
      * @param name
      *        the logger name
-     * @return the Jdk14Logger0
+     * @return the Jdk14Logger
      */
     public static Jdk14Logger forName(final String name) {
         if (CACHE.containsKey(name)) {
